@@ -9,12 +9,12 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 
-public class MainActivity extends Activity {
+public class ImageCompareActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_image_compare);
 
         ImageView imageViewBase = (ImageView) findViewById(R.id.imageview_base_image),
                 imageViewCompare = (ImageView) findViewById(R.id.imageview_compare_image),
@@ -28,8 +28,6 @@ public class MainActivity extends Activity {
 
         View loadingView = findViewById(R.id.loadingView);
         new BitmapCompareAsync(imgBase, imgCompare, imageViewDelta, loadingView).execute();
-//        Bitmap imgDelta = ImageComparator.compareBitmap(imgBase, imgCompare, 100);
-//        imageViewDelta.setImageBitmap(imgDelta);
     }
 
     private Bitmap loadRawImage(int id) {
