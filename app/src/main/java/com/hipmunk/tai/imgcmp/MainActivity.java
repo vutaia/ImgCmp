@@ -1,45 +1,75 @@
 package com.hipmunk.tai.imgcmp;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 
-import java.io.InputStream;
+import com.hipmunk.tai.imgcmp.model.ImageTest;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imageViewBase = (ImageView) findViewById(R.id.imageview_base_image),
-                imageViewCompare = (ImageView) findViewById(R.id.imageview_compare_image),
-                imageViewDelta = (ImageView) findViewById(R.id.imageview_delta_image);
-
-        Bitmap imgBase = loadRawImage(R.raw.a_base),
-                imgCompare = loadRawImage(R.raw.a_compare);
-
-        imageViewBase.setImageBitmap(imgBase);
-        imageViewCompare.setImageBitmap(imgCompare);
-
-        View loadingView = findViewById(R.id.loadingView);
-        new BitmapCompareAsync(imgBase, imgCompare, imageViewDelta, loadingView).execute();
-//        Bitmap imgDelta = ImageComparator.compareBitmap(imgBase, imgCompare, 100);
-//        imageViewDelta.setImageBitmap(imgDelta);
+        ListView testListView = (ListView) findViewById(R.id.listview_tests);
+        testListView.setAdapter(new TestListViewAdapter(this));
+        testListView.setOnItemClickListener(this);
     }
 
-    private Bitmap loadRawImage(int id) {
-        Bitmap img = null;
-        try {
-            InputStream ip = getResources().openRawResource(id);
-            img = BitmapFactory.decodeStream(ip);
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(MainActivity.this, ImageCompareActivity.class);
+        intent.putExtra("position", position);
+        startActivity(intent);
+    }
+
+    class TestListViewAdapter extends ArrayAdapter<ImageTest> {
+
+        public TestListViewAdapter(Context context) {
+            super(context, -1);
         }
-        return img;
+
+
+        public TestListViewAdapter(Context context, int resource, ImageTest[] objects) {
+            super(context, resource, objects);
+        }
+
+        @Override
+        public int getCount() {
+            return Tests.TESTS.length;
+        }
+
+        @Nullable
+        @Override
+        public ImageTest getItem(int position) {
+            return Tests.TESTS[position];
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView==null) {
+                LayoutInflater li = LayoutInflater.from(parent.getContext());
+                convertView = li.inflate(R.layout.component_image_test, null);
+            }
+            ImageView iv1 = (ImageView) convertView.findViewById(R.id.image1);
+            ImageView iv2 = (ImageView) convertView.findViewById(R.id.image2);
+
+            iv1.setImageDrawable(getResources().getDrawable(getItem(position).getImageOneRawId()));
+            iv2.setImageDrawable(getResources().getDrawable(getItem(position).getImageTwoRawId()));
+
+            return convertView;
+        }
     }
+
 }

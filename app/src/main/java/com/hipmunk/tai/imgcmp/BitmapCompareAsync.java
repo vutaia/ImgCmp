@@ -25,7 +25,7 @@ public class BitmapCompareAsync extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(Void... params) {
-        Bitmap deltaBitmap = ImageComparator.compareBitmap(mOne, mTwo, 100);
+        Bitmap deltaBitmap = ImageComparator.compareBitmap(mOne, mTwo, 90f);
         return deltaBitmap;
     }
 
