@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.bumptech.glide.Glide;
 import com.hipmunk.tai.imgcmp.model.ImageTest;
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
@@ -40,11 +41,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             super(context, -1);
         }
 
-
-        public TestListViewAdapter(Context context, int resource, ImageTest[] objects) {
-            super(context, resource, objects);
-        }
-
         @Override
         public int getCount() {
             return Tests.TESTS.length;
@@ -65,8 +61,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             ImageView iv1 = (ImageView) convertView.findViewById(R.id.image1);
             ImageView iv2 = (ImageView) convertView.findViewById(R.id.image2);
 
-            iv1.setImageDrawable(getResources().getDrawable(getItem(position).getImageOneRawId()));
-            iv2.setImageDrawable(getResources().getDrawable(getItem(position).getImageTwoRawId()));
+            Glide.with(MainActivity.this).load(getItem(position).getImageOneRawId()).into(iv1);
+            Glide.with(MainActivity.this).load(getItem(position).getImageTwoRawId()).into(iv2);
 
             return convertView;
         }

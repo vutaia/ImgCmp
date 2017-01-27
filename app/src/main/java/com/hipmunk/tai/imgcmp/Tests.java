@@ -16,7 +16,7 @@ public class Tests {
     public static ImageTest[] TESTS = {
             new ImageTest(a_base, a_compare, .90f),
             new ImageTest(b_base, b_compare, .90f),
-            new ImageTest(a_base, b_compare, .90f),
-            new ImageTest(b_base, a_compare, .90f),
+//            new ImageTest(a_base, b_compare, .90f),
+//            new ImageTest(b_base, a_compare, .90f),
     };
 }

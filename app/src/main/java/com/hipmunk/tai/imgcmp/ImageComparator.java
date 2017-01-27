@@ -3,13 +3,15 @@ package com.hipmunk.tai.imgcmp;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
+import com.hipmunk.tai.imgcmp.model.ImageResult;
+
 /**
  * Created by tai on 1/24/17.
  */
 
 public class ImageComparator {
 
-    public static Bitmap compareBitmap(Bitmap _one, Bitmap _two, float _threshold) {
+    public static ImageResult compareBitmap(Bitmap _one, Bitmap _two, float _threshold) {
         int height1 = _one.getHeight(), height2 = _two.getHeight();
         int width1 = _one.getWidth(), width2 = _two.getWidth();
         int maxHeight = Math.max(height1, height2);
@@ -41,10 +43,6 @@ public class ImageComparator {
             }
         }
 
-        System.out.println("maxHeight: "+maxHeight);
-        System.out.println("maxWidth: "+maxWidth);
-        System.out.println("% delta: "+(sameCount/(maxWidth*maxHeight)));
-
-        return deltaBitmap;
+        return new ImageResult(deltaBitmap, (float)(sameCount/(maxWidth*maxHeight)));
     }
 }
