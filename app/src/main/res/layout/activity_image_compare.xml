@@ -22,6 +22,7 @@
         android:id="@+id/viewpager_images"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:background="#fc232323"/>
 
 </LinearLayout>
