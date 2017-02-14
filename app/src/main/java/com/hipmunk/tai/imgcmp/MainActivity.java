@@ -21,6 +21,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println(“hello”);
         setContentView(R.layout.activity_main);
 
         ListView testListView = (ListView) findViewById(R.id.listview_tests);
